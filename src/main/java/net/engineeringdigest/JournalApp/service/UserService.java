@@ -4,6 +4,8 @@ import net.engineeringdigest.JournalApp.Repository.UserRepository;
 import net.engineeringdigest.JournalApp.config.SpringSecurity;
 import net.engineeringdigest.JournalApp.entity.User;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,7 @@ import java.util.List;
 @Component
 public class UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserRepository userRepository;
 
@@ -25,7 +28,7 @@ public class UserService {
     private static final PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 
     public void saveUserEntry(User user){
-        System.out.println("before save journal entry in userdb");
+        log.info("before save journal entry in userdb");
         userRepository.save(user);
     }
 
