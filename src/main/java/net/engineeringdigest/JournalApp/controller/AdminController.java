@@ -22,7 +22,6 @@ public class AdminController {
     @GetMapping("/all-user")
     public ResponseEntity<?> getAllUsers() {
         List<User> allUserEntry = userService.getAllUserEntry();
-
         if (allUserEntry != null && !allUserEntry.isEmpty()) {
             return new ResponseEntity<>(allUserEntry, HttpStatus.OK);
         }
