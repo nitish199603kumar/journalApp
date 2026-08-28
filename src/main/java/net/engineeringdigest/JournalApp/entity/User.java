@@ -1,21 +1,21 @@
 package net.engineeringdigest.JournalApp.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import org.bson.types.ObjectId;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Document(collection = "user")
 @Data
-@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -32,5 +32,6 @@ public class User {
     List<JournalEntry> journalEntries=new ArrayList<>();
 
     private List<String> role;
+
 
 }
