@@ -63,12 +63,13 @@ public class UserController {
       String greetings="";
       if(weatherResponse!=null){
          greetings="Hi " + authentication.getName() + ", Your city temp is :" + weatherResponse.getCurrent().getTempCelcious();
-         return new ResponseEntity<>(greetings , HttpStatus.NOT_FOUND);
+         return new ResponseEntity<>(greetings , HttpStatus.OK);
       }
-
       return new ResponseEntity<>("Hi : " + authentication.getName(), HttpStatus.NOT_FOUND);
    }
 
 
-
    }
+
+
+

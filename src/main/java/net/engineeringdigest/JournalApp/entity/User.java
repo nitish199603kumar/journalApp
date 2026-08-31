@@ -16,6 +16,7 @@ import java.util.List;
 @Document(collection = "user")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -32,6 +33,9 @@ public class User {
     List<JournalEntry> journalEntries=new ArrayList<>();
 
     private List<String> role;
+
+    private String email;
+    private String sentimentalAnalysis;
 
 
 }
