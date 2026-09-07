@@ -46,7 +46,7 @@ public class WeatherService {
         HttpStatus statusCode = response.getStatusCode();
         log.info("Status Code {}",statusCode);
         WeatherResponse body = response.getBody();
-        log.info("Response Body {} {}",body,response);
+        log.info("Response Body {},{}",body,response);
         return body;
     }
 }

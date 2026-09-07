@@ -58,11 +58,11 @@ public class UserController {
    public ResponseEntity<?> getWeatherReport()
    {
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      WeatherResponse weatherResponse = weatherService.getWeather("Mumbai");
+      WeatherResponse weatherResponse = weatherService.getWeather("Delhi");
       log.info("weatherResponse {}",weatherResponse);
       String greetings="";
       if(weatherResponse!=null){
-         greetings="Hi " + authentication.getName() + ", Your city temp is :" + weatherResponse.getCurrent().getTempCelcious();
+         greetings="Hi " + authentication.getName() + ", Your city temp is :" + weatherResponse.getCurrent().getTempCelcious()+"---"+weatherResponse.getCurrent().getTempFarenhite();
          return new ResponseEntity<>(greetings , HttpStatus.OK);
       }
       return new ResponseEntity<>("Hi : " + authentication.getName(), HttpStatus.NOT_FOUND);
