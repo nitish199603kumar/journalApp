@@ -54,6 +54,7 @@ public class UserController {
 
    }
 
+
    @GetMapping("/weather-report")
    public ResponseEntity<?> getWeatherReport()
    {
