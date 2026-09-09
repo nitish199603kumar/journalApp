@@ -31,23 +31,35 @@ public class WeatherService {
     @Autowired
     private RestTemplate restTemplate;
 
-// write a method which will take city name as input and return the weather report of that city using the above API and apiKey
+
+    @Autowired
+    private RedishTestService redisService;
     
 
     public WeatherResponse getWeather(String city){
         String finalApi = API.replace("API_KEY", apiKey).replace("CITY", city);
+
+        WeatherResponse getWeatherRedisData = redisService.getRedisData("city" + city, WeatherResponse.class);
+        if(getWeatherRedisData != null){
+            log.info("Weather data for city {} found in Redis cache", city);
+            return getWeatherRedisData;
+        }else {
 
 //        HttpHeaders httpHeaders=new HttpHeaders();
 //        httpHeaders.set("key","value");
 //        User user =User.builder().userName("Niitish").password("Nitish").build();
 //        HttpEntity<User> httpEntity=new HttpEntity<>(user,httpHeaders);
 //        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApi, HttpMethod.POST,httpEntity , WeatherResponse.class);
-        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApi, HttpMethod.GET, null, WeatherResponse.class);
-        HttpStatus statusCode = response.getStatusCode();
-        log.info("Status Code {}",statusCode);
-        WeatherResponse body = response.getBody();
-        log.info("Response Body {},{}",body,response);
-        return body;
+            ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApi, HttpMethod.GET, null, WeatherResponse.class);
+            HttpStatus statusCode = response.getStatusCode();
+            log.info("Status Code {}", statusCode);
+            WeatherResponse body = response.getBody();
+            if(body != null){
+                redisService.setRedisData("city"+city, body, 300L);
+            }
+            log.info("Response Body {},{}", body, response);
+            return body;
+        }
     }
 }
 
