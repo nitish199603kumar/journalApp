@@ -55,4 +55,31 @@ public class EmployeeExportService {
         return employees.size();
     }
 
+    public FileSystemResource downloadEmployeesJsonFile() throws IOException {
+
+        // Step 1: Read all records from MySQL
+        List<EmployeeTestDb> employees = employeeRepository.findAll();
+
+        // Step 2: Prepare the output file path
+        Path outputPath = Paths.get(filePath)
+                .toAbsolutePath()
+                .normalize();
+
+        // Step 3: Create the parent directory
+        Path parent = outputPath.getParent();
+
+        if (parent != null) {
+            Files.createDirectories(parent);
+        }
+
+        // Step 4: Convert records to formatted JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        objectMapper.writeValue(outputPath.toFile(), employees);
+
+        // Step 5: Return the generated file
+        return new FileSystemResource(outputPath.toFile());
+    }
+
 }
